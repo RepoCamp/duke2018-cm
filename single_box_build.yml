@@ -71,7 +71,6 @@
     # - { role: dce_ssl }
     # - { role: force_ssl }
     # - { role: restart }
-    # - { role: aws_ssm }
     # --------------
     # You only need to run these if you are starting with an AMI backup
     # Note that you need to run some tasks again if you're starting with an AMI,
