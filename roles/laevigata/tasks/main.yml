@@ -1,0 +1,50 @@
+# Install laevigata specific configuration files
+
+- name: ensure emory config directory exists
+  become: yes
+  file:
+    path: /opt/laevigata/shared/config/emory
+    state: directory
+
+- name: copy admin_sets config
+  become: yes
+  template:
+    src: admin_sets.yml
+    dest: /opt/laevigata/shared/config/emory/admin_sets.yml
+    owner: deploy
+    group: deploy
+    backup: yes
+
+- name: copy superusers config
+  become: yes
+  template:
+    src: superusers.yml
+    dest: /opt/laevigata/shared/config/emory/superusers.yml
+    owner: deploy
+    group: deploy
+    backup: yes
+
+- name: copy do not send file
+  become: yes
+  copy: src=do_not_send.yml dest=/opt/laevigata/shared/config/emory/do_not_send.yml
+      owner=deploy
+      group=deploy
+      mode=0644
+
+- name: copy registrar data
+  become: yes
+  copy: src=registrar_data_20180420.json dest=/opt/laevigata/shared/config/emory/registrar_data_20180420.json
+      owner=deploy
+      group=deploy
+      mode=0644
+  when: host == 'prod' or host == 'prod-upgrade' or host == 'stage' or host == 'stage-upgrade'
+
+- name: symlink registrar data
+  become: yes
+  file:
+    src: /opt/laevigata/shared/config/emory/registrar_data_20180420.json
+    dest: /opt/laevigata/shared/config/emory/registrar_data.json
+    owner: deploy
+    group: deploy
+    state: link
+  when: host == 'prod' or host == 'prod-upgrade' or host == 'stage' or host == 'stage-upgrade'

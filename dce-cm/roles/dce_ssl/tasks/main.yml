@@ -1,0 +1,31 @@
+# Put DCE certs into place on the server
+---
+- name: include ssl vault
+  include_vars: STAR_curationexperts_com.yml
+
+- name: install SSL certificate
+  become: yes
+  copy:
+    content: '{{ ssl_certificate }}'
+    dest: /etc/ssl/certs/STAR_curationexperts_com.crt
+    owner: root
+    group: root
+    mode: 0644
+ 
+- name: install SSL private key
+  become: yes
+  copy:
+    content: '{{ ssl_private_key }}'
+    dest: /etc/ssl/private/STAR_curationexperts_com.key
+    owner: root
+    group: root
+    mode: 0600
+
+- name: install SSL chain file
+  become: yes
+  copy:
+    content: '{{ ssl_chain_file }}'
+    dest: /etc/ssl/certs/STAR_curationexperts_com_bundle.pem
+    owner: root
+    group: root
+    mode: 0600

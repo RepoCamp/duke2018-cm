@@ -1,0 +1,12 @@
+---
+- name: install nagios
+  import_tasks: install_nagios.yml
+  
+- name: configure nagios
+  import_tasks: configure_nagios.yml
+  
+- name: nagios apache config
+  import_tasks: nagios_apache_config.yml
+
+- name: enable nagios systemctl
+  import_tasks: enable_nagios.yml

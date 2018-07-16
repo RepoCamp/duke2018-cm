@@ -1,0 +1,14 @@
+#!/bin/bash
+function isrunning {
+        # systemctl reports sidekiq running
+        RUNNING=$(systemctl status sidekiq | grep running)
+        if [ "$RUNNING" ]; then
+                echo "OK - sidekiq is running"
+                exit 0
+        else
+                echo "CRITICAL - sidekiq is not running"
+                exit 2
+        fi
+}
+
+isrunning

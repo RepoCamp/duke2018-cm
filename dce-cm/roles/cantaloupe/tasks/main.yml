@@ -1,0 +1,17 @@
+---
+# ROLE: cantaloupe
+# roles/cantaloupe/tasks/main.yml
+
+# Installs current version of cantaloupe
+# Usage:
+#    - { role: cantaloupe          ,..  }
+#
+# NOTE: this role largely follows the instructions at:
+# * https://www.cybera.ca/news-and-events/tech-radar/getting-started-on-shibboleth/ (out of date for Ubuntu 16.04)
+# * https://www.fukr.org.uk/?p=8 (better)
+
+- name: install cantaloupe
+  import_tasks: install_cantaloupe.yml
+
+- name: proxy cantaloupe behind apache
+  import_tasks: apache_proxy.yml

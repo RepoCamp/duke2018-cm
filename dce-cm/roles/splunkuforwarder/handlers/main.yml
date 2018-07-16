@@ -1,0 +1,6 @@
+---
+- name: Service restart Splunk
+  service:
+    name: splunk
+    state: restarted
+  become: yes

@@ -1,0 +1,93 @@
+[dce:children]
+shibboleth_idp
+cantaloupe
+demo
+nagios
+
+[dce:vars]
+domain = curationexperts.com
+server_admin_email = systems@curationexperts.com
+nagios_hostgroup_name = dce
+nagios_hostgroup_alias = DCE Infrastructure
+nagios_server_ips = '34.202.63.115 54.221.248.229'
+
+# DCE LDAP / Shibboleth servers
+
+# DCE Shibboleth IDP servers
+# These provide the identity service against which
+# Shibboleth SP clients can authenticate
+[shibboleth_idp:children]
+meredith
+
+[meredith]
+meredith.curationexperts.com
+
+[meredith:vars]
+hostname = meredith
+project_name = auth
+log_path = ./build_logs/meredith_install.log
+ldap_master_password = crewman-antler-artless-theft
+tomcat8_web_gui_password = myna-merchant-hast-kindling
+
+[cantaloupe]
+52.45.238.200
+
+[cantaloupe:vars]
+hostname = cantaloupe
+project_name = cantaloupe
+log_path = ./build_logs/cantaloupe_install.log
+ldap_master_password = crewman-antler-artless-theft
+tomcat8_web_gui_password = myna-merchant-hast-kindling
+
+# ################################
+# DCE Demo Servers
+
+[demo:children]
+sandbox-demo
+stage-demo
+prod-demo
+
+[demo:vars]
+project_name = passiflora
+
+[sandbox-demo]
+sandbox-demo.curationexperts.com 
+[sandbox-demo:vars]
+hostname = sandbox-demo
+log_path = ./build_logs/sandbox-demo.log
+ansible_user = ubuntu
+
+[stage-demo]
+34.239.133.147
+
+[prod-demo]
+demo.curationexperts.com
+
+[prod-demo:vars]
+hostname = demo
+log_path = ./build_logs/prod-demo.log
+
+# ################################
+# Hosted Clients
+
+[laevigata]
+demo-etd.curationexperts.com
+
+[laevigata:vars]
+hostname = demo-etd
+project_name = laevigata
+log_path = ./build_logs/emory.log
+domain = demo-etd.curationexperts.com
+
+# #############################
+# DCE Nagios servers
+
+[nagios:children]
+panopticon
+
+[panopticon]
+panopticon.curationexperts.com
+
+[panopticon:vars]
+hostname = panopticon
+log_path = ./build_logs/panopticon.log

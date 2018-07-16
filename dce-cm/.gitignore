@@ -1,0 +1,6 @@
+*.log
+*.retry
+# Never put unencrypted key files in git
+*.crt
+*.key
+*.pem

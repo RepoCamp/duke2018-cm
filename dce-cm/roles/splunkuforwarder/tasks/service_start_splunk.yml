@@ -1,0 +1,6 @@
+---
+- name: Service start splunk
+  become: yes
+  service:
+    name: splunk
+    state: started

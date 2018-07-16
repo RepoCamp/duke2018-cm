@@ -1,0 +1,115 @@
+Laney Graduate School:
+  workflow:
+    - laney_graduate_school
+  approving:
+    - thairst # Tamika Hairston
+    - twrig31 # Tracey Wright
+    - rlwebb # Renee Webb
+Emory College:
+  approving:
+    - cbeard4 # Carlee Beard
+Candler School of Theology:
+  approving:
+    - shart # Shelly Hart
+    - ksgarne # Kelly Garner Shannon
+Applied Epidemiology:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - abianc3
+    - ltompkins
+Applied Public Health Informatics:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - abianc3
+Behavioral Sciences and Health Education:
+  approving:
+    - mcrios
+    - rfreem2
+    - lriley2
+    - bshe
+Biostatistics:
+  approving:
+    - msherre
+    - rfreem2
+Environmental Health:
+  approving:
+    - ascarl
+    - rfreem2
+Environmental Health - MPH:
+  approving:
+    - ascarl
+    - rfreem2
+Environmental Health Epidemiology - MPH & MSPH:
+  approving:
+    - ascarl
+    - rfreem2
+    - zray
+Epidemiology:
+  approving:
+    - jtenley
+    - rfreem2
+    - nferlan
+    - zray
+Executive Masters of Public Health - MPH:
+  approving:
+    - ltompkins
+    - letompk
+    - abianc3
+    - rfreem2
+Global Environmental Health - MPH:
+  approving:
+    - ascarl
+    - rfreem2
+    - nferlan
+Global Epidemiology:
+  approving:
+    - jtenley
+    - nferlan
+    - rfreem2
+    - zray
+Health Care Outcomes Management:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - nferlan
+    - abianc3
+Health Policy and Management:
+  approving:
+    - kwollen
+    - rfreem2
+    - nferlan
+Hubert Department of Global Health:
+  approving:
+    - tnash
+    - ftraven
+    - rfreem2
+    - nferlan
+Management Science:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - nferlan
+Maternal and Child Health Epidemiology:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - nferlan
+Prevention Science:
+  approving:
+    - letompk
+    - malperi
+    - rfreem2
+    - nferlan
+    - abianc3
+Public Health Informatics:
+  approving:
+    - msherre
+    - rfreem2
+    - nferlan

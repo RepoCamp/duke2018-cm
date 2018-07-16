@@ -1,0 +1,12 @@
+---
+- name: enable nagios service in systemctl
+  become: yes
+  shell: systemctl enable nagios.service
+
+- name: (re)start nagios
+  become: yes
+  shell: systemctl restart nagios.service
+
+- name: (re)start apache2
+  become: yes
+  shell: systemctl restart apache2.service

@@ -1,0 +1,42 @@
+---  
+- name: add nagios apache site
+  become: yes
+  template: src=nagios.conf dest=/etc/apache2/sites-available/nagios.conf owner=www-data group=www-data backup=no
+
+- name: create apache htpasswd file
+  become: yes
+  template: src=htpasswd.users dest=/usr/local/nagios/etc/htpasswd.users owner=nagios group=nagios backup=no
+
+- name: add users to apache htpasswd file
+  become: yes
+  shell: "htpasswd -b /usr/local/nagios/etc/htpasswd.users {{ item }} password"
+  with_items:
+    - "{{ nagios_users }}"
+  when: nagios_users is defined and nagios_users != None
+
+- name: enable mod_rewrite
+  become: yes
+  command: a2enmod rewrite
+  
+- name: enable mod_cgi
+  become: yes
+  command: a2enmod cgi
+  
+- name: enable mod_ssl
+  become: yes
+  command: a2enmod ssl
+  
+- name: remove default site
+  become: yes
+  command: a2dissite 000-default
+
+- name: enable nagios site
+  become: yes
+  command: a2ensite nagios
+
+- name: restart apache
+  become: yes
+  service:
+    name: apache2
+    enabled: yes
+    state: restarted

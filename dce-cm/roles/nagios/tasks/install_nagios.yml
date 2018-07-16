@@ -1,0 +1,76 @@
+---
+- name: install nagios pre-requisites
+  package: name={{ item }} state=present
+  become: yes
+  with_items:
+    - wget
+    - build-essential
+    - apache2
+    - php
+    - libapache2-mod-php7.0
+    - libapache2-mod-php
+    - php-gd
+    - libgd-dev
+    - sendmail
+    - unzip
+    
+- name: create nagios group
+  become: yes
+  group: name=nagios
+
+- name: create nagios user
+  become: yes
+  user: name=nagios group=nagios shell=/bin/bash createhome=yes state=present
+    
+- name: create nagcmd group
+  become: yes
+  group: name=nagcmd
+  
+- name: add nagios to nagcmd group
+  become: yes
+  shell: usermod -a -G nagcmd nagios
+
+- name: add www-data to nagcmd and nagios groups
+  become: yes
+  shell: usermod -a -G nagios,nagcmd www-data
+
+- name: setup install directory
+  set_fact:
+    install_path: /home/{{ ansible_ssh_user }}/install
+
+- name: ensure install directory exists
+  file:
+    path: '{{ install_path }}'
+    state: directory
+
+- name: download nagios source
+  get_url:
+    url: https://assets.nagios.com/downloads/nagioscore/releases/nagios-{{ nagios_version }}.tar.gz
+    dest: '{{ install_path }}/nagios-{{ nagios_version }}.tar.gz'
+    force: no
+
+- name: unzip nagios source
+  shell: "tar -vxzf nagios-{{ nagios_version }}.tar.gz creates=nagios-{{ nagios_version }} warn=no"
+  args:
+    chdir: '{{ install_path }}'
+    
+- name: remove previously installed nagios
+  become: yes
+  command: rm -rf /usr/local/nagios
+  
+- name: configure nagios
+  shell: ./configure --with-nagios-group=nagios --with-command-group=nagios
+  args:
+    chdir: '{{ install_path }}/nagios-{{ nagios_version }}'
+    
+- name: compile and install nagios
+  become: yes
+  shell: make all; sudo make install; sudo make install-commandmode; sudo make install-init; sudo make install-config
+  args:
+    chdir: '{{ install_path }}/nagios-{{ nagios_version }}'
+
+- name: copy event handlers
+  become: yes
+  shell: cp -R contrib/eventhandlers/ /usr/local/nagios/libexec/; chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers
+  args:
+    chdir: '{{ install_path }}/nagios-{{ nagios_version }}'

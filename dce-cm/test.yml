@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: false
+  user: ubuntu
+  
+#- include_tasks: check_if_splunk_installed.yml
+  roles:
+    - { role: splunkuforwarder, project_name: testproject4, hostname: solomon-test-4th, domain: testdce.com }

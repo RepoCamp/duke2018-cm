@@ -1,0 +1,23 @@
+---
+# ROLE: shibboleth-idp
+# roles/shibboleth-idp/tasks/main.yml
+
+# Installs current version of shibboleth
+# Usage:
+#    - { role: shibboleth-idp          ,..  }
+#
+# NOTE: this role largely follows the instructions at:
+# * https://www.cybera.ca/news-and-events/tech-radar/getting-started-on-shibboleth/ (out of date for Ubuntu 16.04)
+# * https://www.fukr.org.uk/?p=8 (better)
+
+- name: install shibboleth idp
+  import_tasks: install_shibboleth_idp.yml
+  
+- name: configure sp metadata
+  import_tasks: configure_sp_metadata.yml
+
+- name: proxy shibboleth idp behind apache SSL
+  import_tasks: apache_ssl_proxy.yml
+ 
+- name: configure shibboleth idp to use slapd LDAP
+  import_tasks: shibboleth_to_ldap.yml

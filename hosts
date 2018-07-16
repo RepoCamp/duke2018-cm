@@ -1,0 +1,31 @@
+[ucla:children]
+cd
+sandbox
+demo
+
+[ucla:vars]
+domain = curationexperts.com
+server_admin_email = systems@curationexperts.com
+project_name = samvera-mgmt
+log_path = "./build_logs/{{ hostname }}.log"
+nagios_hostgroup_name = ucla_hosting
+nagios_hostgroup_alias = UCLA Hosting
+nagios_server_ips = '34.202.63.115 52.6.252.94'
+
+[cd]
+cd-ucla.curationexperts.com
+
+[cd:vars]
+hostname = cd-ucla
+
+[sandbox]
+sandbox-ucla.curationexperts.com
+
+[sandbox:vars]
+hostname = sandbox-ucla
+
+[demo]
+demo-ucla.curationexperts.com
+
+[demo:vars]
+hostname = demo-ucla

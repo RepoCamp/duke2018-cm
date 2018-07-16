@@ -1,0 +1,25 @@
+---
+# Vars
+################  deploymentclient.conf  ##################################
+
+splunk_deployment_server_URI: input-prd-p-h3smll3m3c5l.cloud.splunk.com:8089   #sets the Splunk Light instance and port to forward logs to
+
+################  inputs.conf  ############################################
+
+#host: sandbox-demo.curation.experts.com 
+
+#additional_log_path:   #Add to or overwrite the default monitored files or directories 
+#  /log/fake.log:
+#    index:                # overide the default index
+#    sourcetype:           #change default sourcetype
+#    ignoreOlderThan:      #set to ignore entries over a certain time period, ex=7d
+#
+
+################  user-seed.conf  #########################################
+#splunk_username_seed   #sets the username of the splunk forwarder account, default is admin 
+#splunk_password_seed:   #sets the password of the splunk forwarder account, default is changeme1i
+
+
+################  main.yml ################################################
+#server_name: Sandbox-demo-6-2-2nd   #overides the default hostname for the Splunk Light Console, leave commented out to use default hostname
+#GUID: TestClientName3nd   #Sets the GUID. Must be unique across Splunk infrastructure  Leave commented out to use the default random GUID

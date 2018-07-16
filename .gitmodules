@@ -1,0 +1,6 @@
+[submodule "ansible-samvera"]
+	path = ansible-samvera
+	url = git@github.com:curationexperts/ansible-samvera.git
+[submodule "dce-cm"]
+	path = dce-cm
+	url = git@github.com:curationexperts/dce-cm.git

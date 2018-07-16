@@ -1,0 +1,4 @@
+---
+- name: mount /opt
+  become: yes
+  template: src=fstab dest=/etc/fstab backup=no

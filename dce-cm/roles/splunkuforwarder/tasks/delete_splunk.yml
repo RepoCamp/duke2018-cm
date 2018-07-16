@@ -1,0 +1,24 @@
+---
+- block:
+  - name: Service stop splunk
+    service:
+      name: splunk
+      state: stopped
+    ignore_errors: yes
+
+  - name: Apt remove splunk
+    apt: 
+      name: splunkforwarder
+      state: absent
+      purge: yes
+
+  - name: Delete remaining splunkforwarder files
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - /opt/splunkforwarder
+      - /etc/profile.d/splunk-auth.sh
+      - /usr/bin/splunk
+      - /etc/init.d/splunk
+  tags: [delete-splunk,never]

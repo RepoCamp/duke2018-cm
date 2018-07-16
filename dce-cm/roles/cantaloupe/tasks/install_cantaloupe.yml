@@ -1,0 +1,64 @@
+---
+- name: setup install directory
+  set_fact:
+    install_path: /home/{{ ansible_ssh_user }}/install
+
+- name: ensure install directory exists
+  file:
+    path: '{{ install_path }}'
+    state: directory
+
+- name: download cantaloupe zip
+  get_url:
+    url: "https://github.com/medusa-project/cantaloupe/releases/download/v{{ cantaloupe_version }}/Cantaloupe-{{ cantaloupe_version}}.zip"
+    dest: '{{ install_path }}/cantaloupe-{{ cantaloupe_version }}.zip'
+    force: no
+
+- name: unzip cantaloupe zipfile
+  shell: unzip cantaloupe-{{ cantaloupe_version }}.zip creates=Cantaloupe-{{ cantaloupe_version }} warn=no
+  args:
+    chdir: '{{ install_path }}'
+    
+- name: install cantaloupe servlet into Tomcat8
+  become: yes
+  copy: 
+      src: "{{ install_path }}/Cantaloupe-{{ cantaloupe_version }}/Cantaloupe-{{ cantaloupe_version }}.war"
+      dest: "$CATALINA_HOME/webapps/cantaloupe.war"
+      remote_src: yes
+      backup: no
+      owner: tomcat8
+      group: tomcat8
+      mode: 0644
+      
+- name: configure cantaloupe config
+  become: yes
+  lineinfile:
+    dest: /etc/tomcat8/catalina.properties
+    state: present
+    line: cantaloupe.config=/opt/cantaloupe/cantaloupe.properties
+    insertafter: EOF
+
+- name: ensure cantaloupe config directory exists
+  become: yes
+  file:
+    path: /opt/cantaloupe
+    state: directory
+    owner: tomcat8
+    group: tomcat8
+    mode: 0644
+    
+- name: write cantaloupe config file
+  become: yes
+  template:
+    src: cantaloupe.properties
+    dest: /opt/cantaloupe/cantaloupe.properties
+    owner: tomcat8
+    group: tomcat8
+    mode: 0644
+
+- name: restart tomcat8
+  become: yes
+  service:
+    name: tomcat8
+    enabled: yes
+    state: restarted

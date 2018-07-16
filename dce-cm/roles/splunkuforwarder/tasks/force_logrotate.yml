@@ -1,0 +1,4 @@
+---
+- name: Force logrotate of syslog
+  become: yes
+  shell: logrotate -f -v /etc/logrotate.conf

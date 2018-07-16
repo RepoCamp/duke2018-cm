@@ -1,0 +1,85 @@
+- hosts: '{{ host }}'
+  name: ensure python is installed for ansible
+  user: ubuntu
+  gather_facts: false
+  pre_tasks:
+      - name: update apt-get
+        raw: sudo apt-get update
+      - name: install python for ansible
+        raw: sudo apt-get -y install python-simplejson
+
+- hosts: '{{ host }}'
+  name: configure server
+  user: ubuntu
+  gather_facts: true
+  vars:
+    repo_url: https://github.com/UCLALibrary/samvera-mgmt.git
+    keys_to_add:
+      - https://github.com/mark-dce.keys
+      - https://github.com/little9.keys
+      - https://github.com/no-reply.keys
+      - https://github.com/bess.keys
+      - https://github.com/val99erie.keys
+      - https://github.com/jenlindner.keys
+      - https://github.com/sgurnick.keys
+      - https://github.com/cachemeoutside.keys
+      - https://github.com/croft103.keys
+      - https://github.com/andrewbenedictwallace.keys
+      - https://github.com/ksclarke.keys
+      - https://github.com/emcaulay.keys
+      - https://github.com/hardyoyo.keys
+      - https://github.com/kjallen.keys
+      - https://github.com/darrowcoucla.keys
+      - https://github.com/metaclaudiah.keys
+      - https://github.com/sshaferUCLA.keys
+      - https://github.com/billha.keys
+    db_user: 'ucla'
+    db_pass: '3IVA9H46VlFarS4O'
+    fcdb_user: 'fcdb_user'
+    fcdb_pass: 'TM2UxWobUlsDv5lV'
+    postgres_pass: '4H0FsUmFrR4Tey6o'
+    nagios_services:
+      - search_results
+      - solr
+      - fedora
+      - opt
+      - sidekiq
+  roles:
+    # - { role: packages }
+    # - { role: set_hostname }
+    # - { role: capybara-webkit }
+    # - { role: set_timezone, timezone: America/New_York }
+    # - { role: sshd_config }
+    # - { role: setup_logrotation }
+    # - { role: clamav }
+    # - { role: pip }
+    # - { role: imagemagick, imagemagick_ver: '7.0.7', gs_ver: '9.19', openjpg_ver: '2.1.0', libtiff_ver: '4.0.5', libpng_ver: '1.6.34' }
+    # - { role: ffmpeg, ffmpeg_version: '3.4' }
+    # - { role: fits, fits_version: '0.8.4' }
+    # - { role: ruby, ruby_version: '2.4.2', ruby_sha_256: '93b9e75e00b262bc4def6b26b7ae8717efc252c47154abb7392e54357e6c8c9c' }
+    # - { role: postgres }
+    # - { role: fedora, fedora_version: '4.7.5' }
+    # - { role: solr, solr_version: '6.6.2' }
+    # - { role: apache, passenger_ver: '5.3.2'}
+    # - { role: apache_with_mod_ssl }
+    # - { role: node }
+    # - { role: yarn }
+    # - { role: capistrano_setup }
+    # - { role: sidekiq }
+    # - { role: dotenv }
+    # - { role: first_deploy, branch: 'capification' }
+    # - { role: dce_ssl }
+    # - { role: force_ssl }
+    # - { role: restart }
+    # - { role: aws_ssm }
+    # --------------
+    # You only need to run these if you are starting with an AMI backup
+    # Note that you need to run some tasks again if you're starting with an AMI,
+    # in case the hostname has changed.
+    - { role: set_hostname }
+    - { role: dotenv }
+    - { role: apache_with_mod_ssl }
+    - { role: force_ssl }
+    # - { role: splunkuforwarder }
+    - { role: nrpe, nrpe_version: '3.2.1', nagios_plugins_version: '2.2.1' }
+    - { role: restart }

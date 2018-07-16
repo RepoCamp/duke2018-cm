@@ -1,0 +1,7 @@
+---
+- name: Service stop splunk
+  become: yes
+  service:
+    name: splunk
+    state: stopped
+  ignore_errors: yes  # if this download fails, drop through to the alternate download path below

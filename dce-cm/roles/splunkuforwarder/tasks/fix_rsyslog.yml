@@ -1,0 +1,26 @@
+---
+- name: Insert preserve FQDN
+  become: yes
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    insertbefore:  "^# Use traditional timestamp format."
+    line: "$PreserveFQDN on"
+
+- name: Comment out KLogPermitNonKernelFacility
+  become: yes
+  replace:
+    dest: /etc/rsyslog.conf
+    regexp: "^[$]KLogPermitNonKernelFacility on"
+    replace: "#$KLogPermitNonKernelFacility on"
+
+- name: Stop syslog
+  become: yes
+  service:
+    name: syslog
+    state: stopped
+
+- name: Start syslog
+  become: yes
+  service:
+    name: syslog
+    state: started

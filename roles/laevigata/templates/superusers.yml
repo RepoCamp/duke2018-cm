@@ -1,0 +1,9 @@
+superusers:
+  database:
+   - bess
+  shibboleth:
+   - tezprox # tezprox
+   - lmackli
+   - fpici
+   - amiles4
+   - mtkowal

@@ -1,0 +1,29 @@
+---
+- block:
+  - include_tasks: check_if_splunk_installed.yml
+  - include_tasks: fix_rsyslog.yml
+    when: rsyslog_changed == false
+  - block:   
+    - include_tasks: service_stop_splunk.yml
+    - include_tasks: force_logrotate.yml 
+    - include_tasks: set_conf_files.yml 
+    - include_tasks: service_start_splunk.yml
+    become: yes
+    when: splunk_exists == true
+  - block:
+    - include_tasks: download_and_install.yml
+    - include_tasks: force_logrotate.yml 
+    - include_tasks: userseed_and_start.yml
+    - include_tasks: set_conf_files.yml 
+    - include_tasks: service_start_splunk.yml
+    become: yes
+    when:  splunk_exists == false
+  - include_tasks: delete_splunk.yml
+    tags: [delete-splunk, never]
+  environment:
+    SPLUNK_USERNAME: "{{ splunk_username_seed }}"
+    SPLUNK_PASSWORD: "{{ splunk_password_seed }}"
+  become: yes
+  vars:
+    splunk_exists: false
+    rsyslog_changed: false

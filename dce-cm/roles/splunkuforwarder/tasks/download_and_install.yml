@@ -1,0 +1,35 @@
+---
+- name: Download splunk binaries
+  get_url:
+    url: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=7.1.0&product=universalforwarder&filename=splunkforwarder-7.1.0-2e75b3406c5b-linux-2.6-amd64.deb&wget=true
+    dest: /tmp
+    mode: 0770
+  register: splunk_download_info
+
+- name: Install splunk binaries
+  apt:
+    deb: "{{ splunk_download_info['dest'] }}"
+    state: present
+    #only_upgrade: yes
+
+- name: Symlink splunk binary
+  file:
+    src: /opt/splunkforwarder/bin/splunk
+    dest: /usr/bin/splunk
+    state: link
+
+- name: Create /etc/splunkcred directory
+  file:
+    path: /etc/splunkcred
+    state: directory
+    mode: 0644
+    group: splunk
+    owner: splunk
+
+- name: Download splunk light .spl file from AWS S3
+  get_url:
+    url: https://s3.amazonaws.com/splunk-dce-file/splunkclouduf.spl
+    dest: /etc/splunkcred
+    mode: 0440
+    group: splunk
+    owner: splunk

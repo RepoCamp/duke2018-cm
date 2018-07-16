@@ -1,0 +1,15 @@
+# Sanity check -- can you connect to AWS?
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - ec2_group_facts:
+        region: us-east-1
+        filters:
+          vpc-id: vpc-4e0a832a
+      register: ec2
+
+    - debug:
+        var: ec2
