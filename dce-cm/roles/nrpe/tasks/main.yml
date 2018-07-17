@@ -1,7 +1,0 @@
----
-- name: install nrpe
-  import_tasks: install_nrpe.yml
-  
-- name: configure nagios side monitoring
-  import_tasks: configure_monitoring.yml
-  

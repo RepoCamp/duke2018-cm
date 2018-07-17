@@ -1,3 +1,0 @@
-[submodule "ansible-samvera"]
-	path = ansible-samvera
-	url = https://github.com/curationexperts/ansible-samvera

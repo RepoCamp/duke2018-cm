@@ -1,9 +1,0 @@
-- name: install capybara-webkit dev tools and libraries
-  become: yes
-  package: name={{ item }} state=present
-  with_items:
-    - qt5-default
-    - libqt5webkit5-dev
-    - gstreamer1.0-plugins-base
-    - gstreamer1.0-tools
-    - gstreamer1.0-x
